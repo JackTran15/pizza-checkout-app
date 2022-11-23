@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { createContext } from "react";
-import { Checkout } from "../modules/checkout";
+import { Checkout } from "../libs/checkout";
 
 export type CheckoutContextType = {
     checkout: Checkout;

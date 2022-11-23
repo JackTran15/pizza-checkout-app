@@ -1,7 +1,7 @@
 import { Company } from "../../common";
 import { useCheckout } from "../../contexts/checkout.context";
-import { Checkout } from "../../modules/checkout";
-import { myLocalStorage } from "../../modules/localStorage";
+import { Checkout } from "../../libs/checkout";
+import { myLocalStorage } from "../../libs/localStorage";
 
 export function CustomerCompanySwitcher() {
     const { checkout, setCheckout } = useCheckout()

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import './App.css';
-import { Checkout } from './modules/checkout';
+import { Checkout } from './libs/checkout';
 import { CheckoutContext } from './contexts/checkout.context';
 import { ListProducts, Sidebar } from './sections';
 import { LIST_SEED_PRODUCTS, LIST_SEED_SPECIAL_RULES } from './common';
 import { useEffect } from 'react';
-import { myLocalStorage } from './modules/localStorage';
+import { myLocalStorage } from './libs/localStorage';
 
 function App() {
   const initalCheckout = new Checkout({

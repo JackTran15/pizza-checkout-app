@@ -1,6 +1,6 @@
 import { CheckoutProduct } from '../../common'
 import { useCheckout } from '../../contexts/checkout.context';
-import { Checkout } from '../../modules/checkout';
+import { Checkout } from '../../libs/checkout';
 import './style.css'
 
 interface ICheckoutProductCard {
