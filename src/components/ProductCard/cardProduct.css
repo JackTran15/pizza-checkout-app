@@ -1,0 +1,103 @@
+.cardProduct {
+    position: relative;
+    max-width: 190px;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cardProduct__image {
+    position: absolute;
+    top: -18%;
+    left: 50%;
+    width: 230px;
+    height: auto;
+    object-fit: contain;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-out;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+    z-index: 2;
+}
+
+.cardProduct__data {
+    position: relative;
+    z-index: 1;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #ededed;
+    padding-top: 220px;
+    transition: all 0.3s ease-out 0.1s;
+}
+
+.cardProduct__info {
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.cardProduct__info .cardProduct__title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.cardProduct__info .cardProduct__desc {
+    font-size: 14px;
+    line-height: 20px;
+    color: #a2a2a2;
+    margin-top: 10px;
+}
+
+.cardProduct__action {
+    display: grid;
+    grid-template: 30px / 1fr 35px;
+}
+
+.cardProduct__price {
+    height: 30px;
+    padding: 0 10px 5px 10px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+}
+
+.cardProduct__add {
+    overflow: hidden;
+    width: 35px;
+    height: 30px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    background-color: #222222;
+    border: none;
+    color: #fff;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in;
+}
+
+.cardProduct__add:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.cardProduct__add:active {
+    opacity: 1;
+    transform: scale(0.8);
+}
+
+.cardProduct:hover .cardProduct__image {
+    top: -20%;
+}
+
+.cardProduct:hover .cardProduct__data {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
