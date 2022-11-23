@@ -1,4 +1,4 @@
-import { Company, SpecialRule } from "./types"
+import { Company, SpecialRule } from "../../common"
 
 export type IncreaseCheckoutProductQuantitiesParams = {
     id: string,

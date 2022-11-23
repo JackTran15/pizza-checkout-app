@@ -170,6 +170,7 @@
 .sidebar .sidebar__header .sidebar__header-title {
     font-size: 20px;
     font-weight: 500;
+    flex-shrink: 0;
 }
 
 .sidebar .sidebar__header .sidebar__header-select {

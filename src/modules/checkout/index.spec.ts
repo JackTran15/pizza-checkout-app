@@ -1,6 +1,6 @@
-import { Checkout } from '../../common';
-import { ListSeedProducts, ListSpecialRules } from '../../common/seeds';
-import { CheckoutProduct, Company, Product, SpecialRule } from '../types';
+
+import { Checkout } from '.';
+import { CheckoutProduct, Company, Product, SpecialRule, LIST_SEED_PRODUCTS, LIST_SEED_SPECIAL_RULES } from '../../common';
 
 
 
@@ -237,7 +237,7 @@ describe('Checkout Module unit testing', () => {
         test('Can remove a cart item by its Id', (done) => {
             checkout.remove({ id: checkoutProducts[0].id })
             expect(checkout.checkoutProducts.length).toEqual(1)
-            expect(checkout.checkoutProducts.find(item => item.id === checkoutProducts[0].id)).toBeFalsy()
+            expect(checkout.checkoutProducts.find((item: CheckoutProduct) => item.id === checkoutProducts[0].id)).toBeFalsy()
             done()
         })
 
@@ -245,7 +245,7 @@ describe('Checkout Module unit testing', () => {
             checkout.checkoutProducts[1].quantities = 1;
             checkout.decrease({ id: checkoutProducts[1].id, num: 1 })
             expect(checkout.checkoutProducts.length).toEqual(1)
-            expect(checkout.checkoutProducts.find(item => item.id === checkoutProducts[1].id)).toBeFalsy()
+            expect(checkout.checkoutProducts.find((item: CheckoutProduct) => item.id === checkoutProducts[1].id)).toBeFalsy()
             done()
         })
     })
@@ -259,20 +259,20 @@ describe('Checkout Module unit testing', () => {
         })
 
         test('Normal pricing calculation', (done) => {
-            checkout.add(ListSeedProducts[0])
-            checkout.add(ListSeedProducts[1])
-            checkout.add(ListSeedProducts[2])
+            checkout.add(LIST_SEED_PRODUCTS[0])
+            checkout.add(LIST_SEED_PRODUCTS[1])
+            checkout.add(LIST_SEED_PRODUCTS[2])
 
             checkout.setCompany(null);
             checkout.setSpecialRules([]);
 
-            const expectTotal = ListSeedProducts.reduce((total: number, product: Product) => product.price + total, 0)
+            const expectTotal = LIST_SEED_PRODUCTS.reduce((total: number, product: Product) => product.price + total, 0)
             expect(checkout.total()).toEqual(expectTotal);
             done()
         })
 
         test('Amazon staff can buy cheaper Large Pizza with right discount percentage', (done) => {
-            const largePizza = ListSeedProducts[2];
+            const largePizza = LIST_SEED_PRODUCTS[2];
             const AmazonSpecialPricerule: SpecialRule = {
                 productId: largePizza.id,
                 name: 'Amazon deal',
@@ -295,7 +295,7 @@ describe('Checkout Module unit testing', () => {
         })
 
         test('Should apply the highest discount percentage deal for each product type', (done) => {
-            const largePizza = ListSeedProducts[2];
+            const largePizza = LIST_SEED_PRODUCTS[2];
             const amazonSpecialPricerule: SpecialRule = {
                 productId: largePizza.id,
                 name: 'Amazon deal 20',
@@ -327,8 +327,8 @@ describe('Checkout Module unit testing', () => {
         })
 
         test('Microsoft - Gets a 3 for 2 deal for Small Pizzas', (done) => {
-            const smallPizza = ListSeedProducts[0];
-            const specialRule: SpecialRule = ListSpecialRules[0];
+            const smallPizza = LIST_SEED_PRODUCTS[0];
+            const specialRule: SpecialRule = LIST_SEED_SPECIAL_RULES[0];
 
             checkout.add(smallPizza)
             checkout.add(smallPizza)
@@ -345,8 +345,8 @@ describe('Checkout Module unit testing', () => {
         })
 
         test('Facebook - Gets a 5 for 4 deal on Medium Pizza', (done) => {
-            const mediumPizza = ListSeedProducts[1];
-            const specialRule: SpecialRule = ListSpecialRules[2];
+            const mediumPizza = LIST_SEED_PRODUCTS[1];
+            const specialRule: SpecialRule = LIST_SEED_SPECIAL_RULES[2];
 
             checkout.add(mediumPizza)
             checkout.add(mediumPizza)
@@ -365,8 +365,8 @@ describe('Checkout Module unit testing', () => {
         })
 
         test("Facebook - Should not apply special rule when Checkout Item's quantities do not reach the rule's minimum discount quantities", (done) => {
-            const mediumPizza = ListSeedProducts[1];
-            const specialRule: SpecialRule = ListSpecialRules[2];
+            const mediumPizza = LIST_SEED_PRODUCTS[1];
+            const specialRule: SpecialRule = LIST_SEED_SPECIAL_RULES[2];
 
             checkout.add(mediumPizza)
             checkout.add(mediumPizza)
@@ -383,8 +383,8 @@ describe('Checkout Module unit testing', () => {
         })
 
         test('Facebook - Gets a 5 for 4 deal on Medium Pizza | buy 7 pizzas', (done) => {
-            const mediumPizza = ListSeedProducts[1];
-            const specialRule: SpecialRule = ListSpecialRules[2];
+            const mediumPizza = LIST_SEED_PRODUCTS[1];
+            const specialRule: SpecialRule = LIST_SEED_SPECIAL_RULES[2];
 
             checkout.add(mediumPizza)
             checkout.add(mediumPizza)

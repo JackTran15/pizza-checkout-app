@@ -30,6 +30,11 @@ export class Checkout {
         this.company = company
     };
 
+    /**
+     * Clone new instance from existed one
+     * @param instance Checkout Instance
+     * @returns 
+     */
     static clone(instance: Checkout): Checkout {
         return new Checkout({
             checkoutProducts: instance.checkoutProducts,
@@ -53,10 +58,10 @@ export class Checkout {
      */
     add(product: Product): any {
         // check is this product id has been exists already in cart products list
-        const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id == product.id);
+        const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id === product.id);
 
         // whether it's not exists => append new CheckoutProduct
-        if (itemIndex == -1) {
+        if (itemIndex === -1) {
             const CheckoutProduct: CheckoutProduct = {
                 ...product,
                 quantities: 1,
@@ -80,8 +85,8 @@ export class Checkout {
     increase(input: IncreaseCheckoutProductQuantitiesParams) {
         const { id, num } = input;
 
-        const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id == id);
-        if (itemIndex == -1) throw new Error('This item is no longer available');
+        const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id === id);
+        if (itemIndex === -1) throw new Error('This item is no longer available');
         this.checkoutProducts[itemIndex].quantities += num;
         return;
     }
@@ -98,11 +103,11 @@ export class Checkout {
 
         const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id === id);
 
-        if (itemIndex == -1)
+        if (itemIndex === -1)
             throw new Error('This item is no longer available');
 
         // remove cart item completely if its quantites just have 1 left
-        if (this.checkoutProducts[itemIndex].quantities == 1)
+        if (this.checkoutProducts[itemIndex].quantities === 1)
             return this.remove({ id })
 
         if (this.checkoutProducts[itemIndex].quantities < num)
@@ -121,12 +126,34 @@ export class Checkout {
     remove(input: RemoveCheckoutProductQuantitiesParams) {
         const { id } = input;
 
-        const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id == id);
-        if (itemIndex == -1) throw new Error('This item is no longer available');
+        const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id === id);
+        if (itemIndex === -1) throw new Error('This item is no longer available');
         this.checkoutProducts = this.checkoutProducts.filter(item => item.id !== id);
         return;
     }
 
+    /**
+     * Get 1 best price discount for 1 product that match minimum quantities and privilledge customer conditions
+     * @param checkoutProduct CheckoutProduct
+     * @returns SpecialRule | null
+     */
+    getApplicableRule(checkoutProduct: CheckoutProduct): SpecialRule | null {
+        const applicableRules = this.specialRules
+            .filter(rule => rule.productId === checkoutProduct.id && (!rule.company || rule.company === this.company))
+            .sort((ruleA, ruleB) => ruleA.discountPercentage < ruleB.discountPercentage ? 1 : -1);
+        return applicableRules.length ? applicableRules[0] : null;
+    }
+
+    getApplicableRules(): SpecialRule[] {
+        return this.checkoutProducts
+            .map((item: CheckoutProduct): SpecialRule | null => {
+                const applicableRules = this.specialRules
+                    .filter(rule => rule.productId === item.id && (!rule.company || rule.company === this.company))
+                    .sort((ruleA, ruleB) => ruleA.discountPercentage < ruleB.discountPercentage ? 1 : -1);
+                return applicableRules.length ? applicableRules[0] : null;
+            })
+            .filter((e: SpecialRule | null) => e ? true : false) as SpecialRule[];
+    }
 
     /**
      * Each product will have several discount rules 
@@ -137,15 +164,11 @@ export class Checkout {
     total(): number {
         return this.checkoutProducts
             .map(item => {
-                const productRules = this.specialRules
-                    .filter(rule => rule.productId === item.id && (!rule.company || rule.company === this.company))
-                    .sort((ruleA, ruleB) => ruleA.discountPercentage < ruleB.discountPercentage ? 1 : -1);
-
-                // if there is no applicable rules => normal total prices calculation
-                if (!productRules.length) return item.price * item.quantities;
-
                 // choose the best discount rule for customer
-                const applicableRule = productRules[0];
+                const applicableRule = this.getApplicableRule(item);
+
+                // if there is no applicable rule => return normal total prices calculation
+                if (!applicableRule) return item.price * item.quantities;
 
                 // counting num of product's quantities that can be discounted according to rule's config
                 const discountedQuantites = item.quantities - item.quantities % applicableRule.minimumDiscountQuantities;
