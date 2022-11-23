@@ -125,7 +125,6 @@ export class Checkout {
      */
     remove(input: RemoveCheckoutProductQuantitiesParams) {
         const { id } = input;
-
         const itemIndex = this.checkoutProducts.findIndex((CheckoutProduct) => CheckoutProduct.id === id);
         if (itemIndex === -1) throw new Error('This item is no longer available');
         this.checkoutProducts = this.checkoutProducts.filter(item => item.id !== id);
