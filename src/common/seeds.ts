@@ -49,4 +49,12 @@ export const LIST_SEED_SPECIAL_RULES: Array<SpecialRule> = [
         minimumDiscountQuantities: 5,
         discountPercentage: 20,
     },
+    {
+        id: 'moi toanh',
+        name: "Deal moi",
+        company: Company.MICROSOFT,
+        productId: PRODUCT_IDS[0],
+        minimumDiscountQuantities: 1,
+        discountPercentage: 20,
+    },
 ]

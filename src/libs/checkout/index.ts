@@ -133,15 +133,18 @@ export class Checkout {
     }
 
     /**
-     * Get 1 best price discount for 1 product 
-     * whether checkout product may match minimum quantities 
-     * and privilledge customer's company conditions
+     * Get 1 best price discount for 1 product may match minimum quantities and privilledge customer conditions
      * @param checkoutProduct CheckoutProduct
      * @returns SpecialRule | null
      */
     getApplicableRule(checkoutProduct: CheckoutProduct): SpecialRule | null {
         const applicableRules = this.specialRules
-            .filter(rule => rule.productId === checkoutProduct.id && (!rule.company || rule.company === this.company))
+            .filter(rule => {
+                const matchId = rule.productId === checkoutProduct.id
+                const matchCompany = !rule.company || rule.company === this.company
+                const matchMinimumQuantities = rule.minimumDiscountQuantities <= checkoutProduct.quantities
+                return matchId && matchCompany && matchMinimumQuantities;
+            })
             .sort((ruleA, ruleB) => ruleA.discountPercentage < ruleB.discountPercentage ? 1 : -1);
         return applicableRules.length ? applicableRules[0] : null;
     }
@@ -152,18 +155,7 @@ export class Checkout {
      */
     getAppliedRules(): SpecialRule[] {
         return this.checkoutProducts
-            .map((item: CheckoutProduct): SpecialRule | null => {
-                const applicableRules = this.specialRules
-                    .filter(rule => {
-                        const matchId = rule.productId === item.id
-                        const matchCompany = !rule.company || rule.company === this.company
-                        const matchMinimumQuantities = rule.minimumDiscountQuantities <= item.quantities
-
-                        return matchId && matchCompany && matchMinimumQuantities
-                    })
-                    .sort((ruleA, ruleB) => ruleA.discountPercentage < ruleB.discountPercentage ? 1 : -1);
-                return applicableRules.length ? applicableRules[0] : null;
-            })
+            .map((item: CheckoutProduct): SpecialRule | null => this.getApplicableRule(item))
             .filter((e: SpecialRule | null) => e ? true : false) as SpecialRule[];
     }
 
