@@ -1,10 +1,10 @@
-import { CheckoutProduct } from "../../common";
-import { CheckoutProductCard, CustomerCompanySwitcher } from "../../components"
+import { CustomerCompanySwitcher } from "../../components"
 import { useCheckout } from "../../contexts/checkout.context";
 import { ListCheckoutProducts } from "./ListCheckoutProducts";
+import { ListApplicablePromotionCards } from "./ListPromotionCards";
 
 export function Sidebar() {
-    const { checkout, setCheckout } = useCheckout()
+    const { checkout } = useCheckout()
 
     const totalCheckout = checkout.total().toFixed(2)
     return (
@@ -32,11 +32,13 @@ export function Sidebar() {
                         <ListCheckoutProducts />
                     </div>
                     <div className='sidebar__footer'>
+                        <ListApplicablePromotionCards />
+
                         <div className='sidebar__footer-pirce'>
                             <p className='sidebar__footer-pirce-text'>
                                 Total
                             </p>
-                            <p className='sidebar__footer-pirce-number'>
+                            <p className='sidebar__footer-pirce-number' id="totalPrice">
                                 ${totalCheckout}
                             </p>
                         </div>

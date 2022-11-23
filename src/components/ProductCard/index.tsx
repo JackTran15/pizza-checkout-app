@@ -1,7 +1,7 @@
 import { Product } from '../../common'
 import { useCheckout } from '../../contexts/checkout.context';
 import { Checkout } from '../../modules/checkout';
-import './cardProduct.css'
+import './style.css'
 
 interface IProductCard {
     product: Product
@@ -16,16 +16,17 @@ export const ProductCard = ({ product }: IProductCard) => {
     }
 
     return (
-        <div className="cardProduct">
-            <img className="cardProduct__image" src="/pizza.png" alt={product.name} />
-            <div className="cardProduct__data">
-                <div className="cardProduct__info">
-                    <h2 className='cardProduct__title'>{product.name}</h2>
-                    <p className='cardProduct__desc'>{product.description}</p>
+        <div className="productCard">
+            <img className="productCard__image" src="/pizza.png" alt={product.name} />
+            <div className="productCard__data">
+                <div className="productCard__info">
+                    <h2 className='productCard__title'>{product.name}</h2>
+                    <p className='productCard__desc'>{product.description}</p>
                 </div>
-                <h3 className="cardProduct__price">${product.price}</h3>
+                <h3 className="productCard__price">${product.price}</h3>
                 <button
-                    className="cardProduct__add"
+                    id="addToCheckout"
+                    className="productCard__add"
                     onClick={addToCheckout}
                 >+
                 </button>

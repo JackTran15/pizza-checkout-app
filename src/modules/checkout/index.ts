@@ -144,11 +144,21 @@ export class Checkout {
         return applicableRules.length ? applicableRules[0] : null;
     }
 
-    getApplicableRules(): SpecialRule[] {
+    /**
+     * Get applied Rule that will be applied to discount total price
+     * @returns SpecialRule | null
+     */
+    getAppliedRules(): SpecialRule[] {
         return this.checkoutProducts
             .map((item: CheckoutProduct): SpecialRule | null => {
                 const applicableRules = this.specialRules
-                    .filter(rule => rule.productId === item.id && (!rule.company || rule.company === this.company))
+                    .filter(rule => {
+                        const matchId = rule.productId === item.id
+                        const matchCompany = !rule.company || rule.company === this.company
+                        const matchMinimumQuantities = rule.minimumDiscountQuantities <= item.quantities
+
+                        return matchId && matchCompany && matchMinimumQuantities
+                    })
                     .sort((ruleA, ruleB) => ruleA.discountPercentage < ruleB.discountPercentage ? 1 : -1);
                 return applicableRules.length ? applicableRules[0] : null;
             })

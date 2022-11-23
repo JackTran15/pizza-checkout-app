@@ -3,9 +3,8 @@ import { Checkout } from '.';
 import { CheckoutProduct, Company, Product, SpecialRule, LIST_SEED_PRODUCTS, LIST_SEED_SPECIAL_RULES } from '../../common';
 
 
-
 describe('Checkout Module unit testing', () => {
-    let checkoutProducts: CheckoutProduct[];
+    let checkoutProducts: CheckoutProduct[] = [];
     let newProduct: Product;
 
     beforeEach(() => {
@@ -62,129 +61,6 @@ describe('Checkout Module unit testing', () => {
         })
     });
 
-    describe('Checkout Module - Validation', () => {
-        let checkout = new Checkout();
-
-        beforeEach(() => {
-            const initialData = { checkoutProducts, company: null, specialRule: [] }
-            checkout = new Checkout(initialData)
-        })
-
-        test('Calling add method should throw error when the input is invalid', (done) => {
-            const wrongTypeInput: any = { ...newProduct, price: "wrong type" };
-            const wrongValueInput: any = { ...newProduct, price: -1111 };
-
-            expect(() => checkout.add(wrongTypeInput)).toThrowError();
-            expect(() => checkout.add(wrongValueInput)).toThrowError();
-            done()
-        })
-
-        test('Calling increase method should throw error when the id is invalid', (done) => {
-            const wrongInput: any = {
-                id: 1,
-                num: 1
-            }
-
-            expect(() => checkout.increase(wrongInput)).toThrowError();
-            done()
-        })
-
-        test('Calling increase method should throw error when the quantities is invalid', (done) => {
-            const wrongTypeInput: any = {
-                id: '1',
-                num: '1'
-            }
-
-            const wrongValueInput: any = {
-                id: '1',
-                num: -1
-            }
-
-            expect(() => checkout.increase(wrongTypeInput))
-                .toThrowError();
-
-            expect(() => checkout.increase(wrongValueInput))
-                .toThrowError();
-
-            done()
-        })
-
-        test('Calling increase method should throw error when product id is not existed', (done) => {
-            const nonExistsIdInput = {
-                id: 'Non-exits ID',
-                num: 1
-            }
-            expect(() => checkout.increase(nonExistsIdInput))
-                .toThrow(new Error('This item is no longer available'));
-            done()
-        })
-
-        test('Calling decrease method should throw error when the id is invalid', (done) => {
-            const wrongInput: any = {
-                id: 1,
-                num: 1
-            }
-
-            expect(() => checkout.decrease(wrongInput)).toThrowError();
-            done()
-        })
-
-        test('Calling decrease method should throw error when the quantities is invalid', (done) => {
-            const wrongTypeInput: any = {
-                id: '1',
-                num: '1'
-            }
-
-            const wrongValueInput: any = {
-                id: '1',
-                num: -1
-            }
-
-            expect(() => checkout.decrease(wrongTypeInput)).toThrowError();
-            expect(() => checkout.decrease(wrongValueInput)).toThrowError();
-            done()
-        })
-
-        test('Calling decrease method should throw error when product id is not existed', (done) => {
-            const nonExistsIdInput = {
-                id: 'Non-exits ID',
-                num: 1
-            }
-            expect(() => checkout.decrease(nonExistsIdInput))
-                .toThrow(new Error('This item is no longer available'));
-            done()
-        })
-
-        test('Calling remove method should throw error when the id is invalid', (done) => {
-            const input: any = {
-                id: 1,
-            }
-
-            expect(async () => checkout.decrease(input)).rejects;
-            done()
-        })
-
-        test('Calling remove method should throw error when product id is not existed', (done) => {
-            const nonExistsIdInput = {
-                id: 'Non-exits ID',
-                num: 1
-            }
-            expect(() => checkout.remove(nonExistsIdInput))
-                .toThrow(new Error('This item is no longer available'));
-            done()
-        })
-
-        test('Calling total method should throw error when the company is invalid', (done) => {
-            const input: any = {
-                specialRules: [],
-                company: "invalid company"
-            }
-
-            expect(() => checkout.decrease(input)).toThrowError();
-            done()
-        })
-
-    });
 
     describe('Checkout Module - Quantities Control', () => {
         let checkout = new Checkout();

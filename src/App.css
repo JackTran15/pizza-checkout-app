@@ -222,10 +222,10 @@
 }
 
 .sidebar .sidebar__footer .sidebar__footer-promotion .sidebar__footer-promotion-content {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     width: 100%;
-    text-align: right;
+    text-align: left;
 }
 
 .sidebar .sidebar__footer .sidebar__footer-pirce {

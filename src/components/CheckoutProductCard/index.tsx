@@ -1,6 +1,3 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useCallback } from 'react';
 import { CheckoutProduct } from '../../common'
 import { useCheckout } from '../../contexts/checkout.context';
 import { Checkout } from '../../modules/checkout';

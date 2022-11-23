@@ -6,7 +6,6 @@ import { ListProducts, Sidebar } from './sections';
 import { LIST_SEED_PRODUCTS, LIST_SEED_SPECIAL_RULES } from './common';
 import { useEffect } from 'react';
 import { myLocalStorage } from './modules/localStorage';
-import { useCallback } from 'react';
 
 function App() {
   const initalCheckout = new Checkout({

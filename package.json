@@ -19,8 +19,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:e2e": "start-server-and-test start http://localhost:3000 cy:run",
+    "test:e2e:watch": "start-server-and-test start http://localhost:3000 cy:open",
+    "test:all": "jest && yarn test:e2e:headless",
+    "test:all:watch": "jest && yarn test:e2e:watch",
+    "eject": "react-scripts eject",
+    "checkout-module:test": "jest modules/checkout --verbose",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cypress": "^11.2.0",
+    "start-server-and-test": "^1.14.0",
+    "ts-jest": "^29.0.3"
   }
 }

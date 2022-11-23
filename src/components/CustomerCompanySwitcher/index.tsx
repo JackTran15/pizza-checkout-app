@@ -18,6 +18,7 @@ export function CustomerCompanySwitcher() {
         </p>
 
         <select
+            id="company_switcher"
             className='sidebar__header-select'
             onChange={(e) => setCompany(e.target.value as Company)}
         >
@@ -25,7 +26,10 @@ export function CustomerCompanySwitcher() {
 
             {Object.values(Company)
                 .map((company: Company) => {
-                    return <option key={company} value={company}>
+                    return <option
+                        key={company}
+                        value={company}
+                        selected={company === checkout.company}>
                         {company}
                     </option>
                 })
