@@ -39,16 +39,14 @@ export const CheckoutProductCard = ({ checkoutProduct }: ICheckoutProductCard) =
                 <div className='checkoutProductCard__bottom'>
                     <div className='checkoutProductCard__quantity'>
                         <button className='checkoutProductCard__quantity-button'
-                            onClick={increase}>
-                            +
-                        </button>
-
-                        <p className='checkoutProductCard__quantity-number'>{checkoutProduct.quantities}</p>
-
-                        <button className='checkoutProductCard__quantity-button'
                             onClick={decrease}
                             disabled={checkoutProduct.quantities <= 1}>
                             -
+                        </button>
+                        <p className='checkoutProductCard__quantity-number'>{checkoutProduct.quantities}</p>
+                        <button className='checkoutProductCard__quantity-button'
+                            onClick={increase}>
+                            +
                         </button>
                     </div>
                     <p className='checkoutProductCard__price'>
