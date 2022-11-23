@@ -1,7 +1,7 @@
 import { CheckoutProduct } from '../../common'
 import { useCheckout } from '../../contexts/checkout.context';
 import { Checkout } from '../../modules/checkout';
-import './CheckoutProductCard.css'
+import './style.css'
 
 interface ICheckoutProductCard {
     checkoutProduct: CheckoutProduct;
