@@ -133,7 +133,9 @@ export class Checkout {
     }
 
     /**
-     * Get 1 best price discount for 1 product that match minimum quantities and privilledge customer conditions
+     * Get 1 best price discount for 1 product 
+     * whether checkout product may match minimum quantities 
+     * and privilledge customer's company conditions
      * @param checkoutProduct CheckoutProduct
      * @returns SpecialRule | null
      */
